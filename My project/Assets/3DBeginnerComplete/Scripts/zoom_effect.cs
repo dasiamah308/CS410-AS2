@@ -16,7 +16,7 @@ public class zoom_effect : MonoBehaviour
     private float _alpha = 0.0f;
     private const float INV_PERIOD_SECONDS = 1.0f;
 
-    public float limit = 2.5f;
+    public float limit = 3f;
     
     void Start()
     {
@@ -78,15 +78,15 @@ public class zoom_effect : MonoBehaviour
             c.a = pulse / 2; 
             screenTint.color = c;
 
-            float shakeStrength = interpAngVelDeg / 3750f; // Scale the shake dynamically
+            float shakeStrength = interpAngVelDeg / 3750f; // scale the shake 
             if (impulseSource != null)
             {
                 Vector3 shakeOffset = Random.insideUnitSphere * shakeStrength;
 
-                // Zero out the Y-axis to avoid vertical shake (dragging down the camera)
-                shakeOffset.y = 0f;
+                
+                shakeOffset.y = 0f; //make sure camera does not go down
 
-                impulseSource.GenerateImpulse(shakeOffset); // Trigger the impulse with custom shake offset
+                impulseSource.GenerateImpulse(shakeOffset); 
             }
             else
             {
@@ -97,6 +97,10 @@ public class zoom_effect : MonoBehaviour
         else{
             
             Cam.transform.localPosition = Vector3.zero;
+
+            Color c = screenTint.color;
+            c.a = 0f;
+            screenTint.color = c;
 
             //if (Cam.fieldOfView > normalFOV)
             //{
